@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form'
 import GoogleAutoComplete from "../../../components/GoogleAutoComplete";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { UploadImage } from "../../../components/UploadImage";
 
 const schema = yup.object().shape({
   usinePicture: yup.mixed()
@@ -78,7 +79,8 @@ const UsineInfo = ({ setFiles,usineName, usineJob, setFormValues }: UserFormProp
     <FormWrapper title= {`Informations sur votre: ${userData.usineStructure}`}>
             
       <h4>Visibles sur votre page personnelle</h4>
-
+      <UploadImage />
+      {/*
       <input
         autoFocus
         type="file"
@@ -87,8 +89,8 @@ const UsineInfo = ({ setFiles,usineName, usineJob, setFormValues }: UserFormProp
       />
 
     {errors.usinePicture && <p className="alert" role="alert">{errors.usinePicture.message}</p>}
-     
-     <button onClick={handleSubmit(onSubmit)}>Submit</button>
+    */}
+    
      <br />
      <br />
 
