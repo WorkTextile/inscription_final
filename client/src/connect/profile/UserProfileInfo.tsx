@@ -1,9 +1,11 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect, ChangeEvent} from "react";
 import { useFormData } from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 import FormWrapper from "../components/FormWrapper";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from 'react-hook-form'
+//import { yupResolver } from "@hookform/resolvers/yup";
+//import { useForm } from 'react-hook-form'
+import { UploadImage } from "../components/UploadImage";
+import type { FormData } from "../../context/UserContext";
 import * as yup from "yup";
 
 const schema = yup.object().shape({
@@ -24,78 +26,48 @@ const schema = yup.object().shape({
     }),
 });
 
-type UserData = {
 
-  lastName: string;
-  firstName: string;
-  phone: string;
-  profilePicture: string;
-
-};
-
-type UserFormProps = UserData & {
-  setFormValues: (fields: Partial<UserData>) => void
+type UserFormProps = FormData & {
+  setFormValues: (fields: Partial<FormData | null>) => void
 }
 
-const UserProfileInfo = ({ firstName, lastName, phone, setFormValues}: UserFormProps)  => {
+const UserProfileInfo = ({ firstName, lastName, phone, setFormValues}: UserFormProps )  => {
 
+  const maybeString = Math.random() > 0.5 ? 'hello' : null;
   const navigate = useNavigate();
   const { userData } = useFormData()
-  
-  const onChangePicture = (e: any) => {
-    //setFormValues(URL.createObjectURL(e.target.files[0]));
-  };
-  
+  /*
   const onSubmit = async (data: any) => {
       /*const formData = new FormData()
-      formData.append("profilePicture", data.profilePicture[0])
+      formData.append("file", data.profilePicture[0])
   
       const res = await fetch("http://localhost:8800/picture", {
         method: "POST",
         body: formData
       }).then(res => res.json())
-      alert(JSON.stringify(res))*/
+      
       console.log(data)
     }
-  
-
+  */
+ /*
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors }
-  } = useForm<UserData>({
+  } = useForm<FormData>({
     resolver: yupResolver(schema), 
     defaultValues: userData.profilePicture 
   });
-
+ */
   return (
 
     <FormWrapper title="Informations sur votre : Profil">
       <h4>Visibles sur votre page personnelle</h4>
-
-      <img   
-          style= {{
-            height: "120px",
-            width: "120px",
-            border: "1px solid #BD1BEE",        
-          }}
-        />
-
-      <label htmlFor="Image">Profile Picture: </label>
-      <input
-        type="file"
-        {...register('profilePicture')}
-        id="select-image"
-        onChange={onChangePicture}
-      />
-
-      {errors.profilePicture && <p role="alert">{errors.profilePicture.message}</p>}
-      
-      <button onClick={handleSubmit(onSubmit)}>Submit</button>
+      <UploadImage />
       <br />
       <br />
-     
+    
       <input
         autoFocus
         required
@@ -121,8 +93,8 @@ const UserProfileInfo = ({ firstName, lastName, phone, setFormValues}: UserFormP
         onChange={e => setFormValues({ phone: e.target.value })}
                    
       />
-      
       <button type="button" onClick={() => navigate("/account")}>Retour</button>
+   
       </FormWrapper>
   )
 }

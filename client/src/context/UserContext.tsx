@@ -9,6 +9,7 @@ export type FormData  = {
     firstName: string;
     phone: string;
     profilePicture: string;
+  
     
 }
 
@@ -21,11 +22,12 @@ const INITIAL_DATA: FormData = {
     firstName: "",
     phone: "",
     profilePicture: "",
+   
   }
 
 type UserContextType = {
-    userData: FormData  | any
-    setFormValues: React.Dispatch<React.SetStateAction<FormData  | any>>
+    userData: FormData | string | any
+    setFormValues: React.Dispatch<React.SetStateAction<FormData  | any >>
 }
 
 type UserContextProviderProps = {

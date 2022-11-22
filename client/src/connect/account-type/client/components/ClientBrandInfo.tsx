@@ -2,8 +2,10 @@ import React from "react"
 import FormWrapper from "../../../components/FormWrapper";
 import { useFormData } from "../../../../context/UserContext";
 import { useForm } from 'react-hook-form'
-import { makeRequest } from "../../../../axios"
+//import { makeRequest } from "../../../../axios"
 import { yupResolver } from "@hookform/resolvers/yup";
+import { UploadImage } from "../../../components/UploadImage";
+import GoogleAutoComplete from "../../../components/GoogleAutoComplete";
 import * as yup from "yup";
 
 const schema = yup.object().shape({
@@ -27,7 +29,6 @@ const schema = yup.object().shape({
 type UserData = {
   clientBrand: string;
   clientJob: string;
-  clientCity: string;
 };
 
 type File = {
@@ -38,7 +39,7 @@ type UserFormProps = UserData & {
   setFormValues: (fields: Partial<UserData>) => void
 }
 
-const ClientBrandInfo = ({ clientBrand, clientJob, clientCity, setFormValues }: UserFormProps) => {
+const ClientBrandInfo = ({ clientBrand, clientJob, setFormValues }: UserFormProps) => {
   
   const { userData } = useFormData()
 
@@ -72,16 +73,18 @@ const ClientBrandInfo = ({ clientBrand, clientJob, clientCity, setFormValues }: 
     <FormWrapper title= {`Informations sur votre: ${userData.clientStructure}`}>
             
       <h4>Visibles sur votre page personnelle</h4>
+      <UploadImage />
+      {/*
       <input
         autoFocus
         type="file"
         {...register('picture')}
         
       />
-
-     {errors.picture && <p className="alert" role="alert">{errors.picture.message}</p>}
+    */}
+    {/* {errors.picture && <p className="alert" role="alert">{errors.picture.message}</p>}*/}
      
-     <button onClick={handleSubmit(onSubmit)}>Submit</button>
+     {/*<button onClick={handleSubmit(onSubmit)}>Submit</button>*/}
      <br />
      <br />
 
@@ -105,15 +108,8 @@ const ClientBrandInfo = ({ clientBrand, clientJob, clientCity, setFormValues }: 
                     
       />
 
-      <input
-        autoFocus
-        required 
-        type="text"
-        value={clientCity}
-        onChange={e => setFormValues({ clientCity: e.target.value })}
-        placeholder=" Ville Exemple: Paris"
-                  
-      />
+      <GoogleAutoComplete />
+      <br />
   
     </FormWrapper>
   )

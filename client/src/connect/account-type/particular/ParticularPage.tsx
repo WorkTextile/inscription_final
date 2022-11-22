@@ -9,36 +9,33 @@ import "../../../styles/globals.css";
 
 const ParticularPage = () => {
   
-  const maybeString = Math.random() > 0.5 ? 'hello' : null;
-  const [files, setFiles] = useState(maybeString ?? '');
-  const upload = async () => {
-
-    try {
-      const formData = new FormData();
-      formData.append("profilePicture", files)
-      const res = await makeRequest.post("/upload", formData);
-      return res.data;
-
-    } catch (err) {
-      console.log(err);
-    }
-};
-
   const { userData, setFormValues } = useFormData();
+  const maybeString = Math.random() > 0.5 ? 'hello' : null;
 
+  const [files, setFiles] = useState(maybeString ?? '');
   const navigate = useNavigate();
 
   const { pageNumberSteps, currentStepIndex, currentStepPage, isFirstStep, isLastStep, back, next} = 
     useMultistepForm([
         <UserProfileInfo
-          upload={upload}
-          files={files}
-          setFiles={setFiles}
           {...userData} 
-          setFormValues={setFormValues} />,
+          setFormValues={setFormValues}
+        />,
     ]);
 
-    
+    const upload = async () => {
+  
+      try {
+        const formData = new FormData();
+        formData.append("file", files)
+        const res = await makeRequest.post("/upload", formData);
+        return res.data;
+  
+      } catch (err) {
+        console.log(err);
+      }
+  };
+
   const mutation = useMutation(
       (newRegister) => {
         return makeRequest.post("/auth/registerParticular", newRegister);
@@ -49,14 +46,13 @@ const ParticularPage = () => {
     e.preventDefault()
     if (!isLastStep) return next()
     console.log(userData)
-    /*let imgUrl = "";
+    let imgUrl = "";
     if (files) imgUrl = await upload();
       mutation.mutate({ ...userData, profilePicture: imgUrl });
       setFiles(maybeString ?? '');
       navigate("/completed")
   }
-  */
-  }
+  
 
   return (
     <>

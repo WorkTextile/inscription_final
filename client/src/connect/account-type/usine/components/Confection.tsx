@@ -1,12 +1,25 @@
 import React, {useState, useEffect} from 'react'
 import UsineListTechImpression from './ListTechImpression';
-import QuantityMin from '../../freelance/components/QuantityMin';
+import QuantityMin from '../../usine/components/QuantityMin';
 import FormWrapper from '../../../components/FormWrapper';
+import Checkbox  from "../../usine/components/Checkbox";
 
+type UserData = {
+  model: [] | any;
+  response: [] | any;
+};
 
-const UsineDeConfection = () => {
+type UserFormProps = UserData & {
+  setFormValues: (fields: Partial<UserData>) => void
+}
+
+const UsineDeConfection = ({ model,setFormValues }: UserFormProps) => {
 
   const [data, setData] = useState<any[]>([])
+  const [userinfo, setUserInfo] = useState({
+    model: [],
+    response: [],
+  });
   
   interface IData {
     label: string;
@@ -28,11 +41,9 @@ const UsineDeConfection = () => {
 
     )
       .then(function(response){
-        console.log(response)
         return response.json();
       })
       .then(function(myJson) {
-        console.log(myJson);
         setData(myJson)
       });
   }
@@ -43,8 +54,19 @@ const UsineDeConfection = () => {
 
   },[])
 
+  let handleMetierChange = (e: any) => {
+   
+
+ 
+      setFormValues({ model: e.target.value});
+    
+
+  };
+ 
   return (
     <FormWrapper title={`Informations sur votre : Production`}>
+       <Checkbox />
+       <br />
       <span>Modèles en production *</span>
       <div className="checkbox">
       
@@ -52,7 +74,7 @@ const UsineDeConfection = () => {
         data && data.length > 0 && data.map((model: IData) => {
           return (
             <div className="checkboxes" key={model.displayOrder}>
-              <label><input type="checkbox" value={model.value}/> <span className='model'>{model.label}</span></label>
+              <label><input type="checkbox" value={model.value} onChange={handleMetierChange}/> <span className='model'>{model.label}</span></label>
             </div>
           )
         })
@@ -60,6 +82,7 @@ const UsineDeConfection = () => {
       </div>
       <QuantityMin />
       <UsineListTechImpression />
+      
     </FormWrapper>
   );
 }

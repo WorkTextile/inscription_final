@@ -148,6 +148,12 @@ button[type="submit"] {
     
 }
 
+.JSON {
+  overflow-wrap: break-word;
+ 
+}
+  
+
 .align-header-quantity 
 {
   float: left;

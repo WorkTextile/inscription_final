@@ -2,7 +2,7 @@ import React from "react";
 import FormWrapper from "../../../components/FormWrapper";
 import { useFormData } from "../../../../context/UserContext";
 import { useForm } from 'react-hook-form'
-import GooglePlaces from "../../../components/GooglePlaces";
+import GoogleAutoComplete from "../../../components/GoogleAutoComplete";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
@@ -27,7 +27,6 @@ const schema = yup.object().shape({
 type UserData = {
     usineName: string;
     usineJob: string;
-    usineCity: string;
     files: string | any;
     setFiles: string | any;
 };
@@ -41,7 +40,7 @@ type UserFormProps = UserData & {
 }
 
 
-const UsineInfo = ({ files, setFiles,usineName, usineJob, usineCity, setFormValues }: UserFormProps) => {
+const UsineInfo = ({ setFiles,usineName, usineJob, setFormValues }: UserFormProps) => {
   
   const { userData } = useFormData()
   
@@ -93,26 +92,30 @@ const UsineInfo = ({ files, setFiles,usineName, usineJob, usineCity, setFormValu
      <br />
      <br />
 
-      <input
-        autoFocus
-        required
-        type="text"
-        placeholder="Nom de votre usine"
-        value={usineName}
-        onChange={e => setFormValues({ usineName: e.target.value })}
-      />
+    <input
+
+      autoFocus
+      required
+      type="text"
+      placeholder="Nom de votre usine"
+      value={usineName}
+      onChange={e => setFormValues({ usineName: e.target.value })}
+
+    />
             
-      <input
-        autoFocus
-        required 
-        type="text"
-        placeholder="Post (Exemple: Gérant)"
-        value={usineJob}
-        onChange={e => setFormValues({ usineJob: e.target.value })}
+    <input
+
+      autoFocus
+      required 
+      type="text"
+      placeholder="Post (Exemple: Gérant)"
+      value={usineJob}
+      onChange={e => setFormValues({ usineJob: e.target.value })}
                     
-      />
+    />
                 
-     <GooglePlaces/>
+    <GoogleAutoComplete />
+    <br />
     
     </FormWrapper>
   )

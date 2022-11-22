@@ -1,9 +1,11 @@
 import React, {useState, useEffect} from 'react'
+import { useFormData } from '../../../../context/UserContext';
 
 const UsineListTechImpression = () => {
 
   const [data, setData] = useState<any[]>([])
-  
+  const { userData, setFormValues } = useFormData();
+
   interface IData {
     label: string;
     value: string;
@@ -24,11 +26,11 @@ const UsineListTechImpression = () => {
 
     )
       .then(function(response){
-        console.log(response)
+       
         return response.json();
       })
       .then(function(myJson) {
-        console.log(myJson);
+        
         setData(myJson)
       });
   }
@@ -39,6 +41,10 @@ const UsineListTechImpression = () => {
 
   },[])
 
+  let handleTechniqueChange = (e: any) => {
+    setFormValues({ techniqueImpression: e.target.value });
+  };
+
   return (
     <>
       <span>Liste des techniques d'impression *</span>
@@ -48,7 +54,7 @@ const UsineListTechImpression = () => {
         data && data.length > 0 && data.map((technique: IData) => {
           return (
             <div className="checkboxes" key={technique.displayOrder}>
-              <label><input type="checkbox" value={technique.value}/> <span>{technique.label}</span></label>
+              <label><input type="checkbox" value={userData.techniqueImpression} onChange={ handleTechniqueChange }/> <span>{technique.label}</span></label>
             </div>
           )
         })

@@ -19,8 +19,7 @@ exports.freelanceTarification = async (req, res) => {
       },
     );
       res.send(results.data.options)
-  
-  }
+}
   
   /** Feelance Experience*/
 exports.freelanceExperience = async (req, res) => {
@@ -52,4 +51,4 @@ exports.freelanceSkill = async (req, res) => {
     );
       res.send(results.data.options)
   
-  }
+}

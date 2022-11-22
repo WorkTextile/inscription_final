@@ -1,20 +1,20 @@
 import React, {useEffect, useState} from "react";
 import FormWrapper from "../../../components/FormWrapper";
 import {FreelanceExperience} from "./FreelanceExperience";
+import GoogleAutoComplete from "../../../components/GoogleAutoComplete";
 
 type UserData = {
     freelanceCurrentJob: string;
     freelanceCity: string;
     freelanceCharges: string;
     freelanceExperience: string;
-
 };
 
 type UserFormProps = UserData & {
     setFormValues: (fields: Partial<UserData>) => void
 }
 
-const FreelanceSkillInfo = ({ freelanceExperience, freelanceCurrentJob, freelanceCity, freelanceCharges, setFormValues }: UserFormProps)  => {
+const FreelanceSkillInfo = ({ freelanceCharges, setFormValues }: UserFormProps)  => {
   
   const [data, setData] = useState<any[]>([])
   const getData = () => {
@@ -39,7 +39,6 @@ const FreelanceSkillInfo = ({ freelanceExperience, freelanceCurrentJob, freelanc
       });
   }
 
-
   useEffect(()=>{
     
     getData()
@@ -58,13 +57,11 @@ const FreelanceSkillInfo = ({ freelanceExperience, freelanceCurrentJob, freelanc
   };
 
   return (
+
     <FormWrapper title="Informations sur votre : Savoir-faire">
     <h4>Visibles sur votre page professionnel</h4>
       <select onChange={handleMetierChange}>
-        <option value="⬇️ Votre metier ⬇️"> -- Select a Skill -- </option>
-        {/* Mapping through each select object in our metier array object
-          and returning an option element with the appropriate attributes / values.
-         */}
+        <option value=" Votre metier "> -- Select a Skill -- </option>
         {data.map((metier:IData, index) => (
           <option value={metier.value}>{metier.label}</option>
         ))}
@@ -73,17 +70,8 @@ const FreelanceSkillInfo = ({ freelanceExperience, freelanceCurrentJob, freelanc
       
      <FreelanceExperience />
 
-      <input
-        autoFocus
-        required 
-        type="text"
-        placeholder="Ville (Exemple Paris)"
-        name="freelanceCity"
-        value={freelanceCity}  
-        onChange={(e) =>
-        setFormValues({ freelanceCity: e.target.value })}
-          
-      />
+     <GoogleAutoComplete />
+      <br />
        
       <input
         autoFocus
@@ -94,7 +82,6 @@ const FreelanceSkillInfo = ({ freelanceExperience, freelanceCurrentJob, freelanc
         value={freelanceCharges}  
         onChange={(e) =>
         setFormValues({ freelanceCharges: e.target.value })}
-        
       />    
       </FormWrapper>
         

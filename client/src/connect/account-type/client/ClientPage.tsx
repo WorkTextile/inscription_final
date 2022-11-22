@@ -19,6 +19,7 @@ const ClientPage = () => {
     function onSubmit(e: FormEvent) {
       e.preventDefault()
       if (!isLastStep) return next()
+      console.log(userData)
       navigate("/completed")
   }
 
